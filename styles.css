@@ -159,13 +159,26 @@ input {
     word-wrap: break-word;
 }
 
+input[type="text"] {
+    width: 100%;
+    max-width: 400px; /* Adjust max-width as needed */
+    padding: 12px;
+    border: none;
+    background: #161616;
+    border-radius: 9px;
+    color: white;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    word-wrap: break-word;
+    box-sizing: border-box;
+}
+
 /* Media query for screens smaller than 768px (typical mobile devices) */
 @media screen and (max-width: 768px) {
-    .main-container {
-        padding: 0 20px; /* Adjusted padding */
-        width: 100%; /* Full width for mobile */
-        max-width: unset; /* Remove max-width for mobile */
-        box-sizing: border-box; /* Ensure padding doesn't expand container width */
+    input[type="text"] {
+        max-width: none;
+        /* Adjust any specific styles for smaller screens if needed */
     }
 
     .content {
