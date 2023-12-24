@@ -10,28 +10,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to enable/disable the button based on input field value
     function toggleButton() {
-        if (inputField.value.trim() === "") {
+        if (inputField.value.trim() === "" || !endsWithQuestionMark(inputField.value.trim())) {
             button.disabled = true;
         } else {
             button.disabled = false;
         }
     }
 
-    inputField.addEventListener("input", toggleButton); // Listen for input changes
+    function endsWithQuestionMark(text) {
+        return text.endsWith("?");
+    }
+
+    inputField.addEventListener("input", function () {
+        toggleButton();
+        // Additional check when typing/question mark is removed
+        if (!endsWithQuestionMark(inputField.value.trim())) {
+            // Handle the case when the question mark is removed
+            button.disabled = true;
+        }
+    });
 
     button.addEventListener("click", async function () {
-        const question = inputField.value;
+        const question = inputField.value.trim(); // Trim whitespace from the question
 
-        // If no question is entered, play the noquestion audio and return
-        if (question.trim() === "") {
+        // If no question is entered or doesn't end with a question mark, play the noquestion audio and return
+        if (!question || !endsWithQuestionMark(question)) {
             audioNoQuestion.play();
             return;
-        }
-
-        // Pause the noquestion audio if it's playing or paused
-        if (!audioNoQuestion.paused) {
-            audioNoQuestion.pause();
-            audioNoQuestion.currentTime = 0; // Reset audio to start for next play
         }
 
         try {
