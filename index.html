@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="content">
+                <div class="title">Tell Me Something</div>
+                <div class="description">
+                    <p>Unveil secrets whispered in shadows, where truths bloom in silence.<br>Share, and watch worlds unfold in whispered revelations.</p>
+                </div>
+                <div class="input-section">
+                    <div class="input-box">
+                        <input type="text" id="inputField" placeholder="Enter your question">
+                        <button id="checkButton" class="check-button">Get Answer</button>
+                    </div>
+                    <div class="note">*Eg. Will it rain today?, Will I get married this week?, Will I buy a car this year?</div>
+                </div>
+                <div class="result-section">
+                    <div class="result-message" id="answer"></div>
+                </div>
+                <div class="credit">Created by <a href="https://www.linkedin.com/in/saurao-dalvi/" target="_blank">Saurao Dalvi</a>, Figma and ChatGPT</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const button = document.getElementById("checkButton");
+            const inputField = document.getElementById("inputField");
+            const answerDiv = document.getElementById("answer");
+
+            button.addEventListener("click", async function () {
+                const question = inputField.value;
+
+                if (question.trim() !== "") {
+                    try {
+                        const response = await fetch("https://yesno.wtf/api");
+                        const data = await response.json();
+
+                        if (data.answer && data.image) {
+                            // Update the answer message
+                            answerDiv.innerHTML = `<img src="${data.image}" alt="${data.answer}" class="result-image"><p>${data.answer}</p>`;
+                        }
+                    } catch (error) {
+                        console.error("Error fetching data:", error);
+                    }
+                } else {
+                    // Handle empty input
+                   // alert("Please enter a question!");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
